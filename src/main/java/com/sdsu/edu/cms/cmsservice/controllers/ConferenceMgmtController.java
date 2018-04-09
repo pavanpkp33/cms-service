@@ -9,6 +9,8 @@ import com.sdsu.edu.cms.common.models.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -29,8 +31,9 @@ public class ConferenceMgmtController {
     }
 
     @PostMapping(value = "/conferences/{id}/tracks", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
-    public ServiceResponse addTracks(@RequestBody Track tracks){
-        return null;
+    public ServiceResponse addTracks(@RequestBody List<Track> tracks, @PathVariable  String id){
+        return conferenceMgmtService.addTracksToConf(tracks, id);
+
     }
 
     @GetMapping("/conferences/id/{cid}")
@@ -40,7 +43,8 @@ public class ConferenceMgmtController {
 
     @GetMapping("/conferences/{name}")
     public ServiceResponse getConferenceByName(@PathVariable String name){
-        return null;
+
+        return conferenceMgmtService.getConferenceByName(name);
     }
 
     @GetMapping("/conferences")

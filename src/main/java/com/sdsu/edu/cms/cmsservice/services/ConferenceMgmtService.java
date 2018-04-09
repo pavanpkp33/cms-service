@@ -1,13 +1,16 @@
 package com.sdsu.edu.cms.cmsservice.services;
 
+import com.google.gson.Gson;
 import com.sdsu.edu.cms.cmsservice.exceptions.ApiErrorException;
+import com.sdsu.edu.cms.cmsservice.exceptions.ConferenceNotFoundException;
 import com.sdsu.edu.cms.cmsservice.proxy.DataServiceProxy;
 import com.sdsu.edu.cms.common.models.cms.Conference;
+import com.sdsu.edu.cms.common.models.cms.Track;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ConferenceMgmtService {
@@ -28,8 +31,24 @@ public class ConferenceMgmtService {
         return response;
     }
 
+    public ServiceResponse addTracksToConf(List<Track> tracks, String cid) {
+        Map<String, String > mp = new HashMap<>();
+        mp.put("cid", cid);
+        response = dataServiceProxy.addTracks(tracks, mp);
+        return response;
+    }
+
     public ServiceResponse getConferenceByName(String name){
-        return null;
+        Map<String, String > mp = new HashMap<>();
+        mp.put("cname", name);
+        response = dataServiceProxy.getConferenceByName(mp);
+        if(response.getData().get(0).equals("false")){
+            throw new ConferenceNotFoundException("Conference with entered short name not found");
+        }
+        String confData = response.getData().get(0).toString().trim();
+        Conference c =  new Gson().fromJson(confData, Conference.class);
+
+        return new ServiceResponse(Arrays.asList(c), "Query successful");
     }
 
     public ServiceResponse getAllConferences(){

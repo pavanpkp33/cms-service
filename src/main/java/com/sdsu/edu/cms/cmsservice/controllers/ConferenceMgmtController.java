@@ -36,6 +36,12 @@ public class ConferenceMgmtController {
 
     }
 
+    @GetMapping(value = "/conferences/{id}/tracks", produces = {APPLICATION_JSON_VALUE})
+    public ServiceResponse getTracks(@PathVariable  String id){
+        return conferenceMgmtService.getTracksConf(id);
+
+    }
+
     @GetMapping("/conferences/id/{cid}")
     public ServiceResponse getConferenceById(@PathVariable String cid){
         return  null;

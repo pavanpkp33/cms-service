@@ -1,15 +1,18 @@
 package com.sdsu.edu.cms.cmsservice.services;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sdsu.edu.cms.cmsservice.exceptions.ApiErrorException;
 import com.sdsu.edu.cms.cmsservice.exceptions.ConferenceNotFoundException;
 import com.sdsu.edu.cms.cmsservice.proxy.DataServiceProxy;
 import com.sdsu.edu.cms.common.models.cms.Conference;
 import com.sdsu.edu.cms.common.models.cms.Track;
+import com.sdsu.edu.cms.common.models.notification.NotifyDBModel;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 @Service
@@ -57,5 +60,22 @@ public class ConferenceMgmtService {
 
     public ServiceResponse updateConference(){
         return null;
+    }
+
+    public ServiceResponse getTracksConf(String id) {
+        Map<String, String> mp = new HashMap<>();
+        mp.put("id", id);
+        response =  dataServiceProxy.getTracks(mp);
+        String jsonStr = response.getData().get(0).toString().trim();
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Track>>() {}.getType();
+        List<Track> tracks = gson.fromJson(jsonStr, type);
+        List<Object> finalRes = new ArrayList<>();
+        for(Track t : tracks){
+            finalRes.add(t);
+        }
+
+        return new ServiceResponse(finalRes,"Query successful");
+
     }
 }

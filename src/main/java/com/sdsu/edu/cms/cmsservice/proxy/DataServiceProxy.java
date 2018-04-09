@@ -22,4 +22,7 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/conferences/get/name")
     ServiceResponse getConferenceByName(@RequestParam Map<String, String> map);
+
+    @PostMapping("/api/v1/conferences/get/tracks")
+    ServiceResponse getTracks(@RequestParam Map<String, String> map);
 }

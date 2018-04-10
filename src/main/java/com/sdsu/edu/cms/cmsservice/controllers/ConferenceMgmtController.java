@@ -25,9 +25,10 @@ public class ConferenceMgmtController {
 
     }
 
-    @PutMapping(value = "/conferences", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
-    public ServiceResponse updateConference(@RequestBody String a){
-        return null;
+    @PutMapping(value = "/conferences/{id}", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
+    public ServiceResponse updateConference(@RequestBody Conference payLoad, @PathVariable String id){
+
+        return conferenceMgmtService.updateConference(payLoad, id);
     }
 
     @PostMapping(value = "/conferences/{id}/tracks", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
@@ -42,8 +43,8 @@ public class ConferenceMgmtController {
 
     }
 
-    @GetMapping("/conferences/id/{cid}")
-    public ServiceResponse getConferenceById(@PathVariable String cid){
+    @GetMapping("/conferences/id/{id}")
+    public ServiceResponse getConferenceById(@PathVariable String id){
         return  null;
     }
 

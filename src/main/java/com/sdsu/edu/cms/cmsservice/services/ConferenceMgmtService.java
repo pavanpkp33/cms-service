@@ -22,7 +22,7 @@ public class ConferenceMgmtService {
     @Autowired
     DataServiceProxy dataServiceProxy;
     public ServiceResponse createConference(Conference model) throws Exception {
-        model.setConference_id(UUID.randomUUID().toString());
+        model.setCid(UUID.randomUUID().toString());
         response = dataServiceProxy.createConference(model);
         if((boolean)response.getData().get(0) == false){
             if(response.getMessage().equals("-2")){
@@ -58,8 +58,14 @@ public class ConferenceMgmtService {
         return null;
     }
 
-    public ServiceResponse updateConference(){
-        return null;
+    public ServiceResponse updateConference(Conference payLoad, String id){
+        Map<String , String> mp = new HashMap<>();
+        mp.put("cid", id);
+        response = dataServiceProxy.updateConference(payLoad, mp);
+        if(!(boolean)response.getData().get(0)){
+            throw new ConferenceNotFoundException("Update failed");
+        }
+        return new ServiceResponse(Arrays.asList(true), "Conference updated successfully.");
     }
 
     public ServiceResponse getTracksConf(String id) {

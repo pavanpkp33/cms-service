@@ -25,4 +25,7 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/conferences/get/tracks")
     ServiceResponse getTracks(@RequestParam Map<String, String> map);
+
+    @PostMapping("/api/v1/conferences/update")
+    ServiceResponse updateConference(@RequestBody Conference conference, @RequestParam Map<String, String> map);
 }

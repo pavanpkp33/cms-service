@@ -1,12 +1,16 @@
 package com.sdsu.edu.cms.cmsservice.services;
 
+import com.sdsu.edu.cms.cmsservice.proxy.DataServiceProxy;
 import com.sdsu.edu.cms.common.models.cms.Submission;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SubmisionMfmtService {
 
+    @Autowired
+    DataServiceProxy dataServiceProxy;
     //while adding new submissions, reject final draft and camera ready paper. That comes next.
     /*
             Steps for new submission handling.
@@ -17,7 +21,11 @@ public class SubmisionMfmtService {
                 b. if user doesnt exists in DB, create a default user and insert into conf_users
      */
     public ServiceResponse addNewSubmission(Submission payLoad,String confId ){
+        payLoad.setCid(confId);
+        dataServiceProxy.createSubmission(payLoad);
+        //todo : check if conference exists with the ID and initiate the submission process.
         return null;
+
     }
 
     /*

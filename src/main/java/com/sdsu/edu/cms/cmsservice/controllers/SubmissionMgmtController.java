@@ -17,9 +17,10 @@ public class SubmissionMgmtController {
     SubmisionMfmtService submisionMfmtService;
 
     @PostMapping(value = "/conferences/{cid}/submissions")
-    public ServiceResponse createSubmission(@ModelAttribute Submission request, @PathVariable String cid){
-        submisionMfmtService.addNewSubmission(request, cid);
-        return null;
+    public ServiceResponse createSubmission(@RequestBody Submission request, @PathVariable String cid){
+
+        return  submisionMfmtService.addNewSubmission(request, cid);
+
     }
 
     @GetMapping(value = "/conferences/{cid}/submissions/{sid}")

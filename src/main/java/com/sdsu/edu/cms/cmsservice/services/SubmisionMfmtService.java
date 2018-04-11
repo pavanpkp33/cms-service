@@ -22,9 +22,9 @@ public class SubmisionMfmtService {
      */
     public ServiceResponse addNewSubmission(Submission payLoad,String confId ){
         payLoad.setCid(confId);
-        dataServiceProxy.createSubmission(payLoad);
+        ServiceResponse response = dataServiceProxy.createSubmission(payLoad);
         //todo : check if conference exists with the ID and initiate the submission process.
-        return null;
+        return response;
 
     }
 

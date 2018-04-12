@@ -1,5 +1,6 @@
 package com.sdsu.edu.cms.cmsservice.controllers;
 
+
 import com.sdsu.edu.cms.cmsservice.services.SubmisionMfmtService;
 import com.sdsu.edu.cms.common.models.cms.Submission;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
@@ -16,12 +17,22 @@ public class SubmissionMgmtController {
     @Autowired
     SubmisionMfmtService submisionMfmtService;
 
+    @PostMapping(value = "/conferences/{cid}/submissions/{sid}")
+    public ServiceResponse updateSubmissions(@ModelAttribute  Submission payLoad, @PathVariable String cid, @PathVariable String sid) throws Exception {
+
+        payLoad.setSid(sid);
+        payLoad.setCid(cid);
+
+        return submisionMfmtService.updateSubmission(payLoad);
+    }
+
     @PostMapping(value = "/conferences/{cid}/submissions")
     public ServiceResponse createSubmission(@RequestBody Submission request, @PathVariable String cid){
 
         return  submisionMfmtService.addNewSubmission(request, cid);
 
     }
+
 
     @GetMapping(value = "/conferences/{cid}/submissions/{sid}")
     public ServiceResponse getSubmissionById(@PathVariable String cid, @PathVariable String sid){
@@ -35,6 +46,7 @@ public class SubmissionMgmtController {
     /*
     REST API for Chair and reviewers to update paper status.
     To upload or edit files, use PUT.
+    Single operation
      */
     @PatchMapping(value = "/conferences/{cid}/submissions/{sid}")
     public ServiceResponse patchSubmissions(@RequestParam Map<String, Object> map, @PathVariable String cid, @PathVariable String sid){
@@ -46,9 +58,6 @@ public class SubmissionMgmtController {
         return null;
     }
 
-    @PutMapping(value = "/conferences/{cid}/submissions/{sid}")
-    public ServiceResponse updateSubmissions(@RequestBody String payLoad, @PathVariable String cid, @PathVariable String sid){
-        return null;
-    }
+
 
 }

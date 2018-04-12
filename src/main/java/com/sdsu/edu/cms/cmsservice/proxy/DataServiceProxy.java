@@ -32,4 +32,7 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/submissions/create")
     ServiceResponse createSubmission(@RequestBody Submission submission);
+
+    @PostMapping("/api/v1/submissions/update")
+    ServiceResponse updateSubmission(@RequestBody Submission submission);
 }

@@ -36,12 +36,12 @@ public class SubmissionMgmtController {
 
     @GetMapping(value = "/conferences/{cid}/submissions/{sid}")
     public ServiceResponse getSubmissionById(@PathVariable String cid, @PathVariable String sid){
-        return null;
+        return submisionMfmtService.getSubmissions(cid, sid);
     }
 
     @GetMapping(value = "/conferences/{cid}/submissions")
     public ServiceResponse getSubmissions(@PathVariable String cid){
-        return null;
+        return submisionMfmtService.getSubmissions(cid, null);
     }
     /*
     REST API for Chair and reviewers to update paper status.

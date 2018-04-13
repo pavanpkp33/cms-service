@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class SubmisionMfmtService {
@@ -58,6 +60,15 @@ public class SubmisionMfmtService {
         }
 
 
+    }
+
+    public ServiceResponse getSubmissions(String cid, String sid){
+        Map<String, String> map = new HashMap<>();
+        if(sid != null){
+            map.put("sid", sid);
+        }
+        map.put("cid", cid);
+        return null;
     }
 
     private Submission processFiles(Submission payLoad) throws Exception {

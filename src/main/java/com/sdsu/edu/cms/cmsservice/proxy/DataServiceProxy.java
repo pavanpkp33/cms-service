@@ -35,4 +35,7 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/submissions/update")
     ServiceResponse updateSubmission(@RequestBody Submission submission);
+
+    @PostMapping("/api/v1/submissions/get")
+    ServiceResponse getSubmission(@RequestParam Map<String, String> params);
 }

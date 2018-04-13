@@ -1,5 +1,7 @@
 package com.sdsu.edu.cms.cmsservice.services;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sdsu.edu.cms.cmsservice.proxy.DataServiceProxy;
 import com.sdsu.edu.cms.common.models.cms.Submission;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
@@ -9,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SubmisionMfmtService {
@@ -68,7 +70,18 @@ public class SubmisionMfmtService {
             map.put("sid", sid);
         }
         map.put("cid", cid);
-        return null;
+        ServiceResponse response = dataServiceProxy.getSubmission(map);
+        if(response.getData() == null) return new ServiceResponse(Arrays.asList(), response.getMessage());
+        String res = response.getData().get(0).toString();
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Submission>>() {}.getType();
+        List<Submission> result = gson.fromJson(res, type);
+        List<Object> finalObj = new ArrayList<>();
+        for(Submission s : result){
+            finalObj.add(s);
+        }
+        return new ServiceResponse(finalObj, response.getMessage());
+
     }
 
     private Submission processFiles(Submission payLoad) throws Exception {

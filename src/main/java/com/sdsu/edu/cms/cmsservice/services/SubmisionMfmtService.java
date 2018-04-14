@@ -1,6 +1,7 @@
 package com.sdsu.edu.cms.cmsservice.services;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sdsu.edu.cms.cmsservice.proxy.DataServiceProxy;
 import com.sdsu.edu.cms.common.models.cms.Submission;
@@ -73,7 +74,8 @@ public class SubmisionMfmtService {
         ServiceResponse response = dataServiceProxy.getSubmission(map);
         if(response.getData() == null) return new ServiceResponse(Arrays.asList(), response.getMessage());
         String res = response.getData().get(0).toString();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
         Type type = new TypeToken<List<Submission>>() {}.getType();
         List<Submission> result = gson.fromJson(res, type);
         List<Object> finalObj = new ArrayList<>();

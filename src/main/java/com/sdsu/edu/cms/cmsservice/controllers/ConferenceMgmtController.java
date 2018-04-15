@@ -59,6 +59,12 @@ public class ConferenceMgmtController {
         return null;
     }
 
+    @DeleteMapping("/conferences/{id}")
+    public ServiceResponse deleteConference(@PathVariable String id){
+        return  conferenceMgmtService.deleteConference(id);
+    }
+
+
 
 
 

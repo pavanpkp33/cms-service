@@ -84,4 +84,11 @@ public class ConferenceMgmtService {
         return new ServiceResponse(finalRes,"Query successful");
 
     }
+
+    public ServiceResponse deleteConference(String id) {
+        Map<String, String> mp = new HashMap<>();
+        mp.put("id", id);
+        return dataServiceProxy.deleteConferences(mp);
+
+    }
 }

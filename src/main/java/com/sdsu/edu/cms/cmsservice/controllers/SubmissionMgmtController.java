@@ -48,14 +48,26 @@ public class SubmissionMgmtController {
     To upload or edit files, use PUT.
     Single operation
      */
-    @PatchMapping(value = "/conferences/{cid}/submissions/{sid}")
-    public ServiceResponse patchSubmissions(@RequestParam Map<String, Object> map, @PathVariable String cid, @PathVariable String sid){
+    @PatchMapping(value = "/conferences/{cid}/submissions/{sid}", consumes = {APPLICATION_JSON_VALUE}, produces = {APPLICATION_JSON_VALUE})
+    public ServiceResponse patchSubmissions(@RequestBody Map<String, Object> map, @PathVariable String cid, @PathVariable String sid){
+        return submisionMfmtService.updateSubmission(sid, map);
+    }
+
+    @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}/files")
+    public ServiceResponse deleteFiles(@PathVariable String sid, @RequestParam Map<String, String> params){
         return null;
     }
 
+    @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}/{authorId}")
+    public ServiceResponse deleteAuthor(@PathVariable String sid, @PathVariable  String authorId){
+        return null;
+    }
+
+
     @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}")
     public ServiceResponse deleteSubmissions(@PathVariable String cid, @PathVariable String sid){
-        return null;
+        return submisionMfmtService.deleteSubmission(sid);
+
     }
 
 

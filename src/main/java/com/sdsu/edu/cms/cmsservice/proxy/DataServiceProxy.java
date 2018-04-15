@@ -38,4 +38,10 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/submissions/get")
     ServiceResponse getSubmission(@RequestParam Map<String, String> params);
+
+    @PostMapping("/api/v1/submissions/delete")
+    ServiceResponse deleteConference(@RequestParam Map<String, String> mp);
+
+    @PostMapping("/api/v1/submissions/patch")
+    ServiceResponse patchConference(@RequestBody String sid, @RequestParam Map<String, Object> mp);
 }

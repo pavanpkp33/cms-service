@@ -125,4 +125,17 @@ public class SubmisionMfmtService {
         }
         return true;
     }
+
+    public ServiceResponse deleteSubmission(String sid){
+        Map<String, String> mp = new HashMap<>();
+        mp.put("sid", sid);
+        return dataServiceProxy.deleteConference(mp);
+    }
+
+    /*
+        this method is used to change paid, group, decision status and also valid
+     */
+    public ServiceResponse updateSubmission(String sid, Map<String, Object> mp){
+        return dataServiceProxy.patchConference(sid, mp);
+    }
 }

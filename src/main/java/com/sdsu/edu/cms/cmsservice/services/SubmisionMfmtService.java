@@ -138,4 +138,20 @@ public class SubmisionMfmtService {
     public ServiceResponse updateSubmission(String sid, Map<String, Object> mp){
         return dataServiceProxy.patchConference(sid, mp);
     }
+
+    public ServiceResponse deleteAuthor(String sid, String authorId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("sid", sid);
+        params.put("aid", authorId);
+        return dataServiceProxy.deleteAuthor(params);
+
+    }
+
+    public ServiceResponse deleteFiles(String sid, String type_id) {
+        Map<String, String> params = new HashMap<>();
+         params.put("sid", sid);
+         params.put("type_id", type_id);
+         return dataServiceProxy.deleteFiles(params);
+
+    }
 }

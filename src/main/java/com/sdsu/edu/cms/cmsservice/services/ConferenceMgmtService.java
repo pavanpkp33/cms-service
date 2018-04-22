@@ -9,6 +9,7 @@ import com.sdsu.edu.cms.common.models.cms.Conference;
 import com.sdsu.edu.cms.common.models.cms.Track;
 import com.sdsu.edu.cms.common.models.notification.NotifyDBModel;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
+import com.sdsu.edu.cms.common.models.review.Reviewers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,5 +91,31 @@ public class ConferenceMgmtService {
         mp.put("id", id);
         return dataServiceProxy.deleteConferences(mp);
 
+    }
+
+    public ServiceResponse getConferenceUsers(String id) {
+        Map<String, String> mp  =new HashMap<>();
+        mp.put("cid", id);
+        ServiceResponse response =  dataServiceProxy.getConferenceUsers(mp);
+        String result = response.getData().get(0).toString();
+
+        Type type = new TypeToken<List<Reviewers>>() {}.getType();
+        List<Reviewers> reviewers = new Gson().fromJson(result, type);
+        List<Object> castResult = new ArrayList<>();
+        for(Reviewers r : reviewers){
+            castResult.add(r);
+        }
+        response.setData(castResult);
+        return response;
+
+    }
+
+    public ServiceResponse deleteRoles(String cid, String uid, String rid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("cid", cid);
+        params.put("uid", uid);
+        params.put("rid", rid);
+
+        return dataServiceProxy.deleteUserRoles(params);
     }
 }

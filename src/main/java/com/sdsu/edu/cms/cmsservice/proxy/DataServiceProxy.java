@@ -53,4 +53,10 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/submissions/files/delete")
     ServiceResponse deleteFiles(@RequestParam Map<String, String> params);
+
+    @PostMapping("/api/v1/conferences/users")
+    ServiceResponse getConferenceUsers(@RequestParam Map<String, String> params);
+
+    @PostMapping("/api/v1/conferences/users/delete")
+    ServiceResponse deleteUserRoles(@RequestParam Map<String, String> params);
 }

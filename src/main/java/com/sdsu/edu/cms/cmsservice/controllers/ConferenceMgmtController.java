@@ -43,6 +43,16 @@ public class ConferenceMgmtController {
 
     }
 
+    @GetMapping(value = "/conferences/{id}/users", produces = {APPLICATION_JSON_VALUE})
+    public ServiceResponse getConferenceUsers(@PathVariable String id){
+        return conferenceMgmtService.getConferenceUsers(id);
+    }
+
+    @DeleteMapping(value = "/conferences/{cid}/users/{uid}/{rid}", produces = {APPLICATION_JSON_VALUE})
+    public ServiceResponse deleteConferenceUsersRoles(@PathVariable String cid, @PathVariable String uid, @PathVariable String rid){
+        return conferenceMgmtService.deleteRoles(cid, uid, rid);
+    }
+
     @GetMapping("/conferences/id/{id}")
     public ServiceResponse getConferenceById(@PathVariable String id){
         return  null;

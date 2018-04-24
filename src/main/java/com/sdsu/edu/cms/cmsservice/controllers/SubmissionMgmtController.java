@@ -28,7 +28,6 @@ public class SubmissionMgmtController {
 
     @PostMapping(value = "/conferences/{cid}/submissions")
     public ServiceResponse createSubmission(@RequestBody Submission request, @PathVariable String cid){
-
         return  submisionMfmtService.addNewSubmission(request, cid);
 
     }

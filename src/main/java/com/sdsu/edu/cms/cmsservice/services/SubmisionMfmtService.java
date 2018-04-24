@@ -154,4 +154,22 @@ public class SubmisionMfmtService {
          return dataServiceProxy.deleteFiles(params);
 
     }
+
+    public ServiceResponse getSubmissionsForUser(String cid, String uid) {
+        Map<String, String> params  =new HashMap<>();
+        params.put("cid", cid);
+        params.put("uid", uid);
+        ServiceResponse response = dataServiceProxy.getSubmissionForUser(params);
+        if(response.getData() == null) return new ServiceResponse(Arrays.asList(), response.getMessage());
+        String res = response.getData().get(0).toString();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
+        Type type = new TypeToken<List<Submission>>() {}.getType();
+        List<Submission> result = gson.fromJson(res, type);
+        List<Object> finalObj = new ArrayList<>();
+        for(Submission s : result){
+            finalObj.add(s);
+        }
+        return new ServiceResponse(finalObj, response.getMessage());
+    }
 }

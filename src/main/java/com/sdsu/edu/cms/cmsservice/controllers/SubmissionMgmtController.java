@@ -33,11 +33,20 @@ public class SubmissionMgmtController {
 
     }
 
+    @GetMapping(value = "/conferences/{cid}/submissions/users/{uid}")
+    public ServiceResponse getSubmissionsForUser(@PathVariable String cid, @PathVariable String uid){
+
+        return submisionMfmtService.getSubmissionsForUser(cid, uid);
+
+    }
+
 
     @GetMapping(value = "/conferences/{cid}/submissions/{sid}")
     public ServiceResponse getSubmissionById(@PathVariable String cid, @PathVariable String sid){
         return submisionMfmtService.getSubmissions(cid, sid);
     }
+
+
 
     @GetMapping(value = "/conferences/{cid}/submissions")
     public ServiceResponse getSubmissions(@PathVariable String cid){

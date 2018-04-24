@@ -1,12 +1,16 @@
 package com.sdsu.edu.cms.cmsservice.controllers;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sdsu.edu.cms.cmsservice.services.SubmisionMfmtService;
 import com.sdsu.edu.cms.common.models.cms.Submission;
 import com.sdsu.edu.cms.common.models.response.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -18,10 +22,28 @@ public class SubmissionMgmtController {
     SubmisionMfmtService submisionMfmtService;
 
     @PostMapping(value = "/conferences/{cid}/submissions/{sid}")
-    public ServiceResponse updateSubmissions(@ModelAttribute  Submission payLoad, @PathVariable String cid, @PathVariable String sid) throws Exception {
-
+    public ServiceResponse updateSubmissions(@RequestParam(name = "draft_paper", required = false) MultipartFile draftPaper,
+                                             @RequestParam(name = "final_paper",required = false) MultipartFile finalPaper,
+                                             @RequestParam(name = "camera_ready_paper", required = false) MultipartFile cameraReady,
+                                             @RequestParam(name = "title", required = false) String title,
+                                             @RequestParam(name = "abstract_text", required = false) String abstractText,
+                                             @RequestParam(name = "uploaded_by_user") String uploadByUser,
+                                             @RequestParam("track_id") int trackId,
+                                             @RequestParam("keywords") String keywords,
+                                             @PathVariable String cid, @PathVariable String sid) throws Exception {
+        Submission payLoad = new Submission();
         payLoad.setSid(sid);
         payLoad.setCid(cid);
+        Type type = new TypeToken<String[]>() {}.getType();
+        String[] arr = new Gson().fromJson(keywords, type);
+        payLoad.setKeyword(arr);
+        payLoad.setTitle(title);
+        payLoad.setTrack_id(trackId);
+        payLoad.setAbstract_text(abstractText);
+        payLoad.setDraft_paper(draftPaper);
+        payLoad.setSubmit_author_id(uploadByUser);
+        payLoad.setFinal_paper(finalPaper);
+        payLoad.setCamera_ready_paper(cameraReady);
 
         return submisionMfmtService.updateSubmission(payLoad);
     }

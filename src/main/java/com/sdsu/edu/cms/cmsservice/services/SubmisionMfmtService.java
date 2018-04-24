@@ -54,7 +54,7 @@ public class SubmisionMfmtService {
             payLoad = processFiles(payLoad);
             payLoad.setDraft_paper(null);
             payLoad.setFinal_paper(null);
-            payLoad.setCameraReadyPaperUri(null);
+            payLoad.setCamera_ready_paper(null);
             return dataServiceProxy.updateSubmission(payLoad);
         } catch (Exception e) {
             e.printStackTrace();

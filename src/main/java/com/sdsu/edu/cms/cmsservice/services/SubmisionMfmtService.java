@@ -25,6 +25,8 @@ public class SubmisionMfmtService {
     DataServiceProxy dataServiceProxy;
     @Value("${cms.paper.upload.path}")
     private String UPLOAD_DIR;
+    @Value("${cms.paper.serve.url}")
+    private String fileUrl;
     //while adding new submissions, reject final draft and camera ready paper. That comes next.
     /*
             Steps for new submission handling.
@@ -90,14 +92,14 @@ public class SubmisionMfmtService {
 
         if(payLoad.getDraft_paper() != null && !payLoad.getDraft_paper().isEmpty()){
             String newName = payLoad.getSid()+"_"+"draft.pdf";
-            payLoad.setDraftPaperUri(newName);
+            payLoad.setDraftPaperUri(fileUrl+newName);
             if(!saveFile(payLoad.getDraft_paper(), UPLOAD_DIR+newName )){
                 throw new Exception("Saving draft file to disk error");
             }
         }
         if(payLoad.getFinal_paper() != null && !payLoad.getFinal_paper().isEmpty()){
             String newName = payLoad.getSid()+"_"+"final.pdf";
-            payLoad.setFinalPaperUri(newName);
+            payLoad.setFinalPaperUri(fileUrl+newName);
             if(!saveFile(payLoad.getFinal_paper(), UPLOAD_DIR+newName )){
                 throw new Exception("Saving final file to disk error");
             }
@@ -105,7 +107,7 @@ public class SubmisionMfmtService {
 
         if(payLoad.getCamera_ready_paper() != null && !payLoad.getCamera_ready_paper().isEmpty()){
             String newName = payLoad.getSid()+"_"+"camera.pdf";
-            payLoad.setCameraReadyPaperUri(newName);
+            payLoad.setCameraReadyPaperUri(fileUrl+newName);
             if(!saveFile(payLoad.getCamera_ready_paper(), UPLOAD_DIR+newName )){
                 throw new Exception("Saving camera ready file to disk error");
             }
@@ -147,10 +149,10 @@ public class SubmisionMfmtService {
 
     }
 
-    public ServiceResponse deleteFiles(String sid, String type_id) {
+    public ServiceResponse deleteFiles(String sid, int type_id) {
         Map<String, String> params = new HashMap<>();
          params.put("sid", sid);
-         params.put("type_id", type_id);
+         params.put("type_id", Integer.toString(type_id));
          return dataServiceProxy.deleteFiles(params);
 
     }

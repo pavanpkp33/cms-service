@@ -83,9 +83,9 @@ public class SubmissionMgmtController {
         return submisionMfmtService.updateSubmission(sid, map);
     }
 
-    @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}/files")
-    public ServiceResponse deleteFiles(@PathVariable String sid, @RequestBody Map<String, String> params){
-        return submisionMfmtService.deleteFiles(sid, params.get("type_id"));
+    @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}/files/{type_id}")
+    public ServiceResponse deleteFiles(@PathVariable String sid, @PathVariable int type_id){
+        return submisionMfmtService.deleteFiles(sid, type_id);
     }
 
     @DeleteMapping(value = "/conferences/{cid}/submissions/{sid}/{authorId}")

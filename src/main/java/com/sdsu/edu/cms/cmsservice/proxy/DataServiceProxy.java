@@ -62,4 +62,7 @@ public interface DataServiceProxy {
 
     @PostMapping("/api/v1/submissions/get/user")
     ServiceResponse getSubmissionForUser(@RequestParam  Map<String, String> params);
+
+    @PostMapping("/api/v1/conferences/tracks/delete")
+    ServiceResponse deleteTrack(@RequestParam Map<String, Integer> params);
 }

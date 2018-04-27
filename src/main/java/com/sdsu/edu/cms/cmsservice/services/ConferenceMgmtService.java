@@ -118,4 +118,10 @@ public class ConferenceMgmtService {
 
         return dataServiceProxy.deleteUserRoles(params);
     }
+
+    public ServiceResponse deleteTracks(int tid) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("tid", tid);
+        return dataServiceProxy.deleteTrack(params);
+    }
 }

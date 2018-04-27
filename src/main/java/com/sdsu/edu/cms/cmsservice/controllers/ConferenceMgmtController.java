@@ -37,6 +37,12 @@ public class ConferenceMgmtController {
 
     }
 
+    @DeleteMapping(value = "/conferences/{id}/tracks/{tid}")
+    public ServiceResponse deleteTracks(@PathVariable String id, @PathVariable int tid){
+        return conferenceMgmtService.deleteTracks(tid);
+    }
+
+
     @GetMapping(value = "/conferences/{id}/tracks", produces = {APPLICATION_JSON_VALUE})
     public ServiceResponse getTracks(@PathVariable  String id){
         return conferenceMgmtService.getTracksConf(id);
